@@ -23,6 +23,7 @@ vnets = {
   }
 }
 
+
 pips = {
   pip1 = {
     name                = "pip-test1"
@@ -34,12 +35,10 @@ pips = {
 }
 keys = {
   key1 = {
-    kv_name  = "key-anji-test"
+    kv_name  = "key-anji"
     location = "West US"
     rg_name  = "rg-test"
     sku_name = "standard"
-    # secret_name = "adminuser"
-    # secret_value = "Anjali@12345"
     rbac_authorization_enabled = true
     public_network_access_enabled = true
   }
@@ -47,16 +46,16 @@ keys = {
 
 secrets = {
   sec1 = {
-    kv_name      = "key-anji-test"
+    kv_name      = "key-anji"
     rg_name      = "rg-test"
-    secret_name  = "adminuser"
+    secret_name  = "adminu"
     secret_value = "anjalikvsecret"
   }
   sec2 = {
-    kv_name      = "key-anji-test"
+    kv_name      = "key-anji"
     rg_name      = "rg-test"
 
-    secret_name  = "adminpassword"
+    secret_name  = "adminpass"
     secret_value = "Anjali@12345"
   }
 }
@@ -66,9 +65,9 @@ vms = {
     subnet_name = "subnet11"
     vnet_name   = "vnet-test"
     pip_name    = "pip-test1"
-    kv_name = "key-anji-test"
-    secret_name = "adminuser"
-    secret_value = "adminpassword"
+    kv_name = "key-anji"
+    secret_name = "adminu"
+    secret_value = "adminpass"
 
     nic_name = "nic-test"
     ip_configuration = [
@@ -100,6 +99,31 @@ vms = {
 
       }
     ]
+  }
+}
+
+nsgs = {
+  nsg1 = {
+
+    nsg_name                = "nsg1"
+    resource_group_name = "rg-test"
+    location            = "West US"
+    subnet_name = "subnet11"
+    virtual_network_name = "vnet-test"
+    security_rule = [
+        {
+            name                       = "SSH"
+            priority                   = 100
+            direction                  = "Inbound"
+            access                     = "Allow"
+            protocol                   = "Tcp"
+            source_port_range           = "*"
+            destination_port_range      = "*"
+            source_address_prefix       = "*"
+            destination_address_prefix  = "*"
+            description                 = "Allow inbound HTTP traffic"
+        }
+      ]
   }
 }
 

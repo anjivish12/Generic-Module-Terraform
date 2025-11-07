@@ -26,6 +26,12 @@ module "secret" {
   secrets    = var.secrets
 }
 
+module "nsg" {
+  depends_on = [ module.resource_group, module.virtual_network ]
+  source = "../modules/azurerm_nsg"
+  nsgs = var.nsgs
+  
+}
 module "vm" {
   depends_on = [module.resource_group, module.public_ip, module.virtual_network, module.kv, module.secret]
   source     = "../modules/azurerm_vm"

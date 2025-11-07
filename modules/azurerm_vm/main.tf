@@ -79,6 +79,15 @@ dynamic "source_image_reference" {
       version   = source_image_reference.value.version
     }
   }
+  custom_data = base64encode(<<-EOF
+              #!/bin/bash
+              sudo apt-get update -y
+              sudo apt-get install nginx -y
+              sudo systemctl enable nginx
+              sudo systemctl start nginx
+              echo "<h1>Welcome to NGINX - deployed via Terraform</h1>" | sudo tee /var/www/html/index.html
+          EOF
+  )
 
   dynamic "identity" {
     for_each = each.value.identity == null ? [] : [each.value.identity]
@@ -146,7 +155,7 @@ dynamic "source_image_reference" {
   bypass_platform_safety_checks_on_user_schedule_enabled = each.value.bypass_platform_safety_checks_on_user_schedule_enabled
   capacity_reservation_group_id = each.value.capacity_reservation_group_id
   computer_name = each.value.computer_name
-  custom_data = each.value.custom_data
+  # custom_data = each.value.custom_data
   dedicated_host_id = each.value.dedicated_host_id
   dedicated_host_group_id = each.value.dedicated_host_group_id
   disk_controller_type = each.value.disk_controller_type
