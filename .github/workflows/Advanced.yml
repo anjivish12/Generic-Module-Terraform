@@ -1,4 +1,4 @@
-name: Simple Workflow
+name: Advanced Workflow
 
 on: workflow_dispatch
 
